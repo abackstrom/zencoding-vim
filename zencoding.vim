@@ -658,7 +658,8 @@ let s:zen_settings = {
 \                    ."    <title></title>\n"
 \                    ."</head>\n"
 \                    ."<body>\n\t${child}|\n</body>\n"
-\                    ."</html>"
+\                    ."</html>",
+\            'script:jquery': "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"></script>"
 \        },
 \        'default_attributes': {
 \            'a': {'href': ''},
