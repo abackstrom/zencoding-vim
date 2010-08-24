@@ -1,7 +1,7 @@
 "=============================================================================
 " File: zencoding.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 03-Jul-2010.
+" Last Change: 06-Jul-2010.
 " Version: 0.43
 " WebPage: http://github.com/mattn/zencoding-vim
 " Description: vim plugins for HTML and CSS hi-speed coding.
@@ -1434,13 +1434,16 @@ function! s:zen_expandAbbr(mode) range
           endif
         endfor
         if len(leader)
-          let items = s:zen_parseIntoTree(leader . "{\n" . str . "}", type).child
+          let items = s:zen_parseIntoTree(leader, type).child
+          let items[0].value = "{\n".str."}"
         else
-          let items = s:zen_parseIntoTree(leader . "{" . str . "}", type).child
+          let items = s:zen_parseIntoTree(leader, type).child
+          let items[0].value = "{".str."}"
         endif
       else
         let str .= getline(a:firstline)
-        let items = s:zen_parseIntoTree(leader . "{" . str . "}", type).child
+        let items = s:zen_parseIntoTree(leader, type).child
+        let items[0].value = "{".str."}"
       endif
       for item in items
         let expand .= s:zen_toString(item, type, 0, filters)
@@ -1613,7 +1616,7 @@ function! s:zen_toggleComment()
     let block = [pos1, [pos1[0], pos1[1] + len(content) - 1]]
     if content[-2:] == '/>' && s:point_in_region(curpos[1:2], block)
       let comment_region = s:search_region('<!--', '-->')
-      if !s:region_is_valid(comment_region) || !s:point_in_region(curpos[1:2], comment_region)
+      if !s:region_is_valid(comment_region) || !s:point_in_region(curpos[1:2], comment_region) || !(s:point_in_region(comment_region[0], block) && s:point_in_region(comment_region[1], block))
         let content = '<!-- ' . s:get_content(block) . ' -->'
         call s:change_content(block, content)
       else
@@ -1631,15 +1634,22 @@ function! s:zen_toggleComment()
         let pos2 = searchpos('</' . tag_name . '>', 'cneW')
       endif
       let block = [pos1, pos2]
+      if !s:region_is_valid(block)
+        call setpos('.', curpos)
+        let block = s:search_region('<!', '-->')
+        if !s:region_is_valid(block)
+          return
+        endif
+      endif
       if s:point_in_region(curpos[1:2], block)
         let comment_region = s:search_region('<!--', '-->')
-        if !s:region_is_valid(comment_region) || !s:point_in_region(curpos[1:2], comment_region)
+        if !s:region_is_valid(comment_region) || !s:point_in_region(curpos[1:2], comment_region) || !(s:point_in_region(comment_region[0], block) && s:point_in_region(comment_region[1], block))
           let content = '<!-- ' . s:get_content(block) . ' -->'
           call s:change_content(block, content)
         else
-          let content = s:get_content(block)
+          let content = s:get_content(comment_region)
           let content = substitute(content, '^<!--\s\(.*\)\s-->$', '\1', '')
-          call s:change_content(block, content)
+          call s:change_content(comment_region, content)
         endif
         return
       else
