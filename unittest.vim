@@ -2,7 +2,7 @@ if exists('g:user_zen_settings')
   let s:old_user_zen_settings = g:user_zen_settings
   unlet! g:user_zen_settings
 endif
-so zencoding.vim
+so plugin/zencoding.vim
 
 unlet! testgroups
 let oldmore = &more
