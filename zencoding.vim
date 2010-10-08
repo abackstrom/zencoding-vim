@@ -700,6 +700,7 @@ let s:zen_settings = {
 \            'form': {'action': ''},
 \            'form:get': {'action': '', 'method': 'get'},
 \            'form:post': {'action': '', 'method': 'post'},
+\            'form:upload': {'action': '', 'method': 'post', 'enctype': 'multipart/form-data'},
 \            'label': {'for': ''},
 \            'input': {'type': ''},
 \            'input:hidden': [{'type': 'hidden'}, {'name': ''}],
