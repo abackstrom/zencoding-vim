@@ -660,7 +660,8 @@ let s:zen_settings = {
 \                    ."<body>\n\t${child}|\n</body>\n"
 \                    ."</html>",
 \            'script:jquery': "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"></script>",
-\            'script:jqmobile': "<script type=\"text/javascript\" src=\"http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js\"></script>"
+\            'script:jqmobile': "<script type=\"text/javascript\" src=\"http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js\"></script>",
+\            'script:jqui': "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js\"></script>"
 \        },
 \        'default_attributes': {
 \            'a': {'href': ''},
