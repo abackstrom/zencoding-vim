@@ -41,7 +41,7 @@ if exists('g:user_zen_settings')
   let g:user_zen_settings = s:old_user_zen_settings
 endif
 let &more=oldmore
- 
+
 finish
 [
 {
@@ -341,6 +341,12 @@ finish
       'type': "html",
       'result': "<link media=\"all\" rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" />\n",
     },
+    {
+      'name': "a[title=\"Hello', world\" rel]",
+      'query': "a[title=\"Hello', world\" rel]",
+      'type': "html",
+      'result': "<a rel=\"\" href=\"\" title=\"Hello', world\"></a>\n",
+    },
   ],
 },
 {
@@ -399,6 +405,23 @@ finish
       'result': "<xsl:apply-templates select=\"\" mode=\"\">\n\t<xsl:with-param select=\"\" name=\"\"></xsl:with-param>\n</xsl:apply-templates>\n",
     },
   ],
+},
+{
+    'category': 'mustache',
+    'tests': [
+      {
+        'name': "div#{{foo}}",
+        'query': "div#{{foo}}",
+        'type': "mustache",
+        'result': "<div id=\"{{foo}}\"></div>\n",
+      },
+      {
+        'name': "div.{{foo}}",
+        'query': "div.{{foo}}",
+        'type': "mustache",
+        'result': "<div class=\"{{foo}}\"></div>\n",
+      },
+    ],
 },
 ]
 " vim:set et:
